@@ -16,8 +16,8 @@ import calendar
 load_dotenv()
 
 # 環境変数から設定を読み込む
-GEMINI_API_KEY="AIzaSyB0n5zhYo5W7s2wWWGDgnmfNlJbHw4PIDE" 
-RAKUTEN_APP_ID="1017247083908490350"
+GEMINI_API_KEY=st.secrets["GEMINI_API_KEY"]
+RAKUTEN_APP_ID=st.secrets["RAKUTEN_APP_ID"]
 
 genai.configure(api_key=GEMINI_API_KEY)
 
