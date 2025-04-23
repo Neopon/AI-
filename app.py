@@ -29,7 +29,7 @@ generation_config = {
 }
 
 model = genai.GenerativeModel(
-    model_name="gemini-2.5-pro-preview-03-25",
+    model_name="gemini-2.5-flash-preview-04-17",
     generation_config=generation_config,
 )
 
@@ -48,13 +48,14 @@ def get_category_ids(user_request, categories, start_date, rice_ratio, bread_rat
     start_weekday = weekdays[start_date.weekday()]
     
     prompt = f"""
-    以下は食材とそのカテゴリIDのリストです：
+    #以下は食材とそのカテゴリIDのリストです：
     {categories}
-    
+
     ユーザーの要求: {user_request}
     開始日: {start_date.strftime('%Y-%m-%d')} ({start_weekday})
     主食の比重: ごはんもの {rice_ratio}%, パン {bread_ratio}%, 麺類 {noodle_ratio}%
-    
+
+    #条件
     この要求と日付、曜日に合う食材・料理を20個選び、必ずそのカテゴリIDをカンマ区切りで出力してください。
     日付と曜日から季節や特別なイベント（例：お正月、クリスマス、ハロウィンなど）を考慮し、適切な食材を選んでください。
     また、それ以外は絶対に出力しないでください。
@@ -118,7 +119,7 @@ def select_recipes(recipes, user_request, start_date, meal_types, rice_ratio, br
     開始日から季節や特別なイベント（例：お正月、クリスマス、ハロウィンなど）、さらに曜日も考慮し、適切なレシピを選んでください。
     最後に、1週間分の献立で必要な材料の総まとめを作成してください。
 
-    出力形式:
+    #必ず以下の出力形式に則って出力してください
     **[日付] ([曜日]):**
     """
 
@@ -144,7 +145,7 @@ def select_recipes(recipes, user_request, start_date, meal_types, rice_ratio, br
     [材料名]: [必要な量]
     ...
 
-    条件:
+    #条件
     - 必ず開始日から7日分の献立を出力してください。
     - 似た料理は絶対出さないでください。
     - 前日の残りなどは考慮しないでください。
@@ -156,7 +157,7 @@ def select_recipes(recipes, user_request, start_date, meal_types, rice_ratio, br
     - 絶対にサラダやスイーツ、味噌汁などを選ばないでください。
     - 開始日から季節や特別なイベント、曜日を考慮し、適切なレシピを選んでください。
 
-    全レシピリスト:
+    #全レシピリスト
     {recipes_info}
     """
     
